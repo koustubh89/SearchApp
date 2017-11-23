@@ -17,12 +17,12 @@
             border-radius: 0.2rem 0.2rem 0 0;
             
             &.active {
-                border-bottom: 2px solid #7d99ca;
+                border-bottom: 2px solid $blue;
                 outline: none;
                 font-weight: 800;
             }
             &:hover {
-                border-bottom: 2px solid #7d99ca;
+                border-bottom: 2px solid $blue;
                 cursor: pointer;
                 font-weight: 800;
             }
@@ -40,7 +40,7 @@
             width: 100%;
             margin: 0.5rem auto 0 auto;
             &.ng-invalid {
-                border: 1px solid maroon;
+                border: 1px solid $errorRed;
             }
         }
 
@@ -50,14 +50,14 @@
             padding: 0;
             padding-left: 0.5rem;
 
-            &.ng-invalid {
-                border: 1px solid maroon;
+            &.ng-invalid.ng-dirty {
+                border: 1px solid $errorRed;
             }
         }
 
         .help-block {
             span {
-                color: maroon;
+                color: $errorRed;
                 font-size: 1.3rem;
                 float: right;
             }

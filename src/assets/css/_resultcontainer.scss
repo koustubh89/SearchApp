@@ -4,12 +4,12 @@
     padding-left: 1.5rem;
 
     .initial-message-resultdiv {
-        border: 1px solid #aaa;
+        border: 1px solid $greyBorder;
         .main-message {
             display: block;
             font-size: 2rem;
             text-align: center;
-            padding: 27%;
+            padding: 24%;
         }
         .instruction {
             display: block;
@@ -23,7 +23,7 @@
             margin: 2rem 0 0.5rem 0;
         }
         .flight {
-            border: 1px solid #eee;
+            border: 1px solid $greyBorder;
             border-radius: 0.2rem;
             margin: 0;
             float: left;
@@ -37,6 +37,10 @@
 
                 label, span {
                     text-transform: capitalize;
+                }
+
+                span {
+                    font-weight: bold;
                 }
                 
                 &:nth-child(2), &:nth-child(4) {

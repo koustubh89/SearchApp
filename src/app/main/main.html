@@ -13,14 +13,15 @@
             <label for="">Select Origin</label>
             <select name="source" id="source_city" data-ng-model="vm.query.source" data-ng-options="city as city for city in vm.cities" ng-init="vm.query.source = vm.cities[0]"  required>
             </select>
-            <div class="help-block" ng-if="queryForm.$submitted || queryForm.source.$touched" ng-messages="queryForm.source.$error">
+            <div class="help-block" ng-if="queryForm.$submitted" ng-messages="queryForm.source.$error">
                 <span ng-message="required">Please select a city</span>
             </div>
           </div>
+
           <div class="form-field">
             <label for="">Select Destination</label>        
             <select name="destination" id="destination_city" data-ng-model="vm.query.destination" data-ng-options="city as city for city in vm.cities" ng-init="vm.query.destination = vm.cities[1]" required></select>
-            <div class="help-block" ng-if="queryForm.$submitted || queryForm.destination.$touched" ng-messages="queryForm.destination.$error">
+            <div class="help-block" ng-if="queryForm.$submitted" ng-messages="queryForm.destination.$error">
               <span ng-message="required">Please select a city</span>
               <span ng-message="same">Please select a diff city</span>
             </div>
@@ -29,7 +30,7 @@
           <div class="form-field">          
             <label for="">Depart Date</label>        
             <input type="date" name="start_date" data-ng-model="vm.query.startDate" min="vm.getMinDate()" placeholder="journey date" required/>
-            <div class="help-block" ng-if="queryForm.$submitted || queryForm.start_date.$touched" ng-messages="queryForm.start_date.$error">
+            <div class="help-block" ng-if="queryForm.$submitted" ng-messages="queryForm.start_date.$error">
                 <span ng-message="required">Please enter a date</span>
                 <span ng-message="pattern">Please enter date in correct format</span>
             </div>
@@ -38,16 +39,16 @@
           <div class="form-field" data-ng-show="vm.currentTab == 2">
             <label for="">Return Date</label>        
             <input type="date" name="return_date" data-ng-model="vm.query.returnDate" placeholder="return journey date" data-ng-required="vm.currentTab == 2"/>
-            <div class="help-block" ng-if="queryForm.$submitted || queryForm.return_date.$touched" ng-messages="queryForm.return_date.$error">
+            <div class="help-block" ng-if="queryForm.$submitted" ng-messages="queryForm.return_date.$error">
               <span ng-message="required">Please enter a date</span>
               <span ng-message="pattern">Please enter date in correct format</span>
             </div>
           </div>
           
-          <div class="form-field">          
+          <div class="form-field">
             <label for="">Passenger(s)</label>        
             <input type="number" name="passenger_count" data-ng-model="vm.query.passengerCount" min="1" placeholder="number of passsenger"  required/>
-            <div class="help-block" ng-if="queryForm.$submitted || queryForm.passenger_count.$touched" ng-messages="queryForm.passenger_count.$error">
+            <div class="help-block" ng-if="queryForm.$submitted" ng-messages="queryForm.passenger_count.$error">
               <span ng-message="required">Please enter number of passengers</span>
             </div>
           </div>
@@ -72,19 +73,19 @@
       </div>
     </div>
     <div class="result-content">
-      <div class="query-details" data-ng-show="queryForm.$submitted">
+      <div class="query-details" data-ng-show="queryForm.$submitted" data-ng-if="queryForm.$submitted && queryForm.$valid && vm.filteredFlights.length > 0">
         <span class="station" data-ng-bind="vm.query.source"></span>
         <span class="station" data-ng-bind="' - ' + vm.query.destination"></span>
         <span class="station" data-ng-bind="' - ' + vm.query.source"></span>
       </div>
       <div class="result">
-        <div class="initial-message-resultdiv" data-ng-if="!queryForm.$submitted">
+        <div class="initial-message-resultdiv" data-ng-if="!queryForm.$submitted || !queryForm.$valid">
           <span class="main-message">
             Welcome to the flight search wizard
             <span class="instruction">Please enter search criteria to choose your flight </span>
           </span>
         </div>
-        <div class="result-container no-flights-found" data-ng-if="queryForm.$submitted && vm.filteredFlights.length == 0">
+        <div class="result-container no-flights-found" data-ng-if="queryForm.$submitted && queryForm.$valid && vm.filteredFlights.length == 0">
           No flights found for {{vm.query.startDate | date: 'dd MMM, yyyy'}} between {{vm.query.source}} and {{vm.query.destination}}
         </div>
         <div class="result-container flight-list" data-ng-if="vm.filteredFlights.length > 0">
