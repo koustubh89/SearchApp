@@ -1,0 +1,149 @@
+<div class="main-container">
+  <h1 class="app-heading">Search Flights</h1>
+  <div class="contains">
+    <div class="form-content">
+      <ul class="tabs-container">
+        <li class="tabs one-way" data-ng-click="vm.currentTab = 1" data-ng-class="{'active': vm.currentTab == 1}">One-way</li>
+        <li class="tabs return" data-ng-click="vm.currentTab = 2" data-ng-class="{'active': vm.currentTab == 2}">Return</li>
+      </ul>
+      <div class="formfields">
+        <form role="form" method="POST" name="queryForm" novalidate data-ng-submit="vm.fireSearchQuery(queryForm.$valid)">
+
+          <div class="form-field">
+            <label for="">Select Origin</label>
+            <select name="source" id="source_city" data-ng-model="vm.query.source" data-ng-options="city as city for city in vm.cities" ng-init="vm.query.source = vm.cities[0]"  required>
+            </select>
+            <div class="help-block" ng-if="queryForm.$submitted || queryForm.source.$touched" ng-messages="queryForm.source.$error">
+                <span ng-message="required">Please select a city</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="">Select Destination</label>        
+            <select name="destination" id="destination_city" data-ng-model="vm.query.destination" data-ng-options="city as city for city in vm.cities" ng-init="vm.query.destination = vm.cities[1]" required></select>
+            <div class="help-block" ng-if="queryForm.$submitted || queryForm.destination.$touched" ng-messages="queryForm.destination.$error">
+              <span ng-message="required">Please select a city</span>
+              <span ng-message="same">Please select a diff city</span>
+            </div>
+          </div>
+
+          <div class="form-field">          
+            <label for="">Depart Date</label>        
+            <input type="date" name="start_date" data-ng-model="vm.query.startDate" min="vm.getMinDate()" placeholder="journey date" required/>
+            <div class="help-block" ng-if="queryForm.$submitted || queryForm.start_date.$touched" ng-messages="queryForm.start_date.$error">
+                <span ng-message="required">Please enter a date</span>
+                <span ng-message="pattern">Please enter date in correct format</span>
+            </div>
+          </div>
+          
+          <div class="form-field" data-ng-show="vm.currentTab == 2">
+            <label for="">Return Date</label>        
+            <input type="date" name="return_date" data-ng-model="vm.query.returnDate" placeholder="return journey date" data-ng-required="vm.currentTab == 2"/>
+            <div class="help-block" ng-if="queryForm.$submitted || queryForm.return_date.$touched" ng-messages="queryForm.return_date.$error">
+              <span ng-message="required">Please enter a date</span>
+              <span ng-message="pattern">Please enter date in correct format</span>
+            </div>
+          </div>
+          
+          <div class="form-field">          
+            <label for="">Passenger(s)</label>        
+            <input type="number" name="passenger_count" data-ng-model="vm.query.passengerCount" min="1" placeholder="number of passsenger"  required/>
+            <div class="help-block" ng-if="queryForm.$submitted || queryForm.passenger_count.$touched" ng-messages="queryForm.passenger_count.$error">
+              <span ng-message="required">Please enter number of passengers</span>
+            </div>
+          </div>
+
+          <input type="submit" value="Search"/>
+        </form>
+      </div>
+      <div class="slider-container">
+        <h3 class="range-selector-container">Cutomize your search:</h3>
+        <span class="slider-instruction">Shift the slider to see the relavant result filtered on basis of cost</span>
+        
+        <div class="slider">
+          <span data-ng-bind="vm.minValue"> min value</span>
+          <input id="slider2" type ="range" min ="{{vm.minValue}}" max="{{vm.maxValue}}" step ="50" value ="1000" ng-model="vm.query.rangeSelector" data-ng-change="vm.resetQueryResults()" data-ng-model-options="{debounce: 300}"></input>
+          <span data-ng-bind="vm.maxValue">max value</span>
+        </div>
+        
+        <div class="slider-display">
+            <span>Rs.{{vm.minValue}}</span> 
+            <span data-ng-if="vm.query.rangeSelector" data-ng-bind="' - Rs.' + vm.query.rangeSelector"></span> 
+        </div>
+      </div>
+    </div>
+    <div class="result-content">
+      <div class="query-details" data-ng-show="queryForm.$submitted">
+        <span class="station" data-ng-bind="vm.query.source"></span>
+        <span class="station" data-ng-bind="' - ' + vm.query.destination"></span>
+        <span class="station" data-ng-bind="' - ' + vm.query.source"></span>
+      </div>
+      <div class="result">
+        <div class="initial-message-resultdiv" data-ng-if="!queryForm.$submitted">
+          <span class="main-message">
+            Welcome to the flight search wizard
+            <span class="instruction">Please enter search criteria to choose your flight </span>
+          </span>
+        </div>
+        <div class="result-container no-flights-found" data-ng-if="queryForm.$submitted && vm.filteredFlights.length == 0">
+          No flights found for {{vm.query.startDate | date: 'dd MMM, yyyy'}} between {{vm.query.source}} and {{vm.query.destination}}
+        </div>
+        <div class="result-container flight-list" data-ng-if="vm.filteredFlights.length > 0">
+          <div class="result-information">
+            <span class="extra-info" data-ng-bind="vm.query.source +' to '+vm.query.destination"></span>
+            on {{vm.query.startDate | date: 'dd MMM, yyyy'}}
+          </div>
+          <div class="flight" data-ng-repeat="flight in vm.filteredFlights">
+            <div class="result-field">
+              <label for="">flight no:</label>
+              <span data-ng-bind="flight.flightNo"></span>
+            </div>
+            <div class="result-field">
+              <label for="">price per ticket</label>          
+              <span data-ng-bind="flight.price"></span>
+            </div>
+            <div class="result-field">
+              <label for="">airlines: </label>
+              <span data-ng-bind="flight.company"></span>
+            </div>
+            <div class="result-field">
+              <label for="">departs at: </label>
+              <span data-ng-bind="flight.time"></span>
+            </div>
+            <button class="pull-right book-button">
+              Book
+            </button>
+          </div>
+        </div>
+
+        <div class="result-container return-flight-list" data-ng-if="vm.currentTab == 2 && vm.returnFilteredFlights.length > 0">
+            <div class="result-information">
+              <span class="extra-info" data-ng-if="vm.currentTab == 2" data-ng-bind="vm.query.destination +' to '+vm.query.source"></span>
+              on {{vm.query.returnDate | date: 'dd MMM, yyyy'}}
+            </div>
+            <div class="flight" data-ng-repeat="flight in vm.returnFilteredFlights">
+              <div class="result-field">
+                <label for="">flight no:</label>
+                <span data-ng-bind="flight.flightNo"></span>
+              </div>
+              <div class="result-field">
+                <label for="">price per ticket</label>          
+                <span data-ng-bind="flight.price"></span>
+              </div>
+              <div class="result-field">
+                <label for="">airlines: </label>
+                <span data-ng-bind="flight.company"></span>
+              </div>
+              <div class="result-field">
+                <label for="">departs at: </label>
+                <span data-ng-bind="flight.time"></span>
+              </div>
+              <button class="pull-right book-button">
+                Book
+              </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

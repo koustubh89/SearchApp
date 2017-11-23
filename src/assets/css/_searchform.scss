@@ -1,0 +1,102 @@
+.form-content {
+    border-right: 1px solid #eee;
+    width: 29%;
+    float: left;
+    padding: 0 1.5%;
+
+    .tabs-container {
+        margin: 0;
+        padding: 0;
+
+        .tabs {
+            list-style-type: none;
+            float: left;
+            width: 45%;
+            padding: 0.3rem 0.5rem;
+            outline: none;
+            border-radius: 0.2rem 0.2rem 0 0;
+            
+            &.active {
+                border-bottom: 2px solid #7d99ca;
+                outline: none;
+                font-weight: 800;
+            }
+            &:hover {
+                border-bottom: 2px solid #7d99ca;
+                cursor: pointer;
+                font-weight: 800;
+            }
+        }
+    }
+
+    .formfields {
+        border-top: 0;
+        margin-top: 4rem;
+        
+        .form-field {
+            padding-bottom: 20px;
+        }
+        select {
+            width: 100%;
+            margin: 0.5rem auto 0 auto;
+            &.ng-invalid {
+                border: 1px solid maroon;
+            }
+        }
+
+        input {
+            width: 98%;
+            margin: 0.5rem auto 0 auto;
+            padding: 0;
+            padding-left: 0.5rem;
+
+            &.ng-invalid {
+                border: 1px solid maroon;
+            }
+        }
+
+        .help-block {
+            span {
+                color: maroon;
+                font-size: 1.3rem;
+                float: right;
+            }
+        }
+    }
+
+    .slider-container {
+        .range-selector-container {
+            margin-bottom: 0.5rem;
+        }
+        .slider-instruction {
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        .slider-display {
+            font-size: 1.6rem;
+            display: block;
+            width: 100%;
+            clear: both;
+        }
+        .slider {
+            padding-top: 2rem;
+            
+            span, input {
+                float: left;
+            }
+            span {
+                width: 5%;
+                line-height: 4.5rem;
+                font-size: 1.2rem;
+
+                &:nth-child(2) {
+                    text-align: right;
+                }
+            }
+            input {
+                width: 75%;
+                margin: 0;
+            }
+        }
+    }
+}
