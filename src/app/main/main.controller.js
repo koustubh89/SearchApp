@@ -2,12 +2,15 @@ export class MainController {
 
   constructor ($timeout, webDevTec) {
     'ngInject';
-    this.cities = ['Delhi', 'Mumbai', 'Ahmedabad', 'Chennai', 'Agra', 'Banglore', 'Guwahati'];
+    this.cities = ['Agra', 'Ahmedabad', 'Banglore', 'Chennai', 'Delhi', 'Guwahati', 'Mumbai'];
     this.activate(webDevTec);
     this.query = {};
     this.filteredFlights = [];
     this.minValue = 0;
-    this.maxValue = 10000;
+    this.maxValue = 20000;
+    this.query.passengerCount = 1;
+    this.query.rangeSelector = 10000;
+    this.currentTab = 1;
   }
 
   activate(webDevTec) {
@@ -20,16 +23,13 @@ export class MainController {
     angular.forEach(this.flights, (flight) => {
       console.log(flight);
     });
-
-    this.minValue = _.min(_.map(this.flights, 'price')); 
-    this.maxValue = _.min(_.map(this.flights, 'price'));
   }
   
   fireSearchQuery(queryForm) {
     let date = this.getFormattedDate(this.query.startDate);
     
     let validated = {status: undefined, resaon: undefined}
-    validated.status = this.checkValidate(queryForm);
+    validated = this.checkValidate(queryForm);
     if (validated.status) {
       this.resultFlights = _.filter( this.flights, {source: this.query.source,destination: this.query.destination, date: date});
       this.filteredFlights = angular.copy(this.resultFlights);
@@ -38,9 +38,29 @@ export class MainController {
         this.returnFlights = _.filter( this.flights, {source: this.query.destination,destination: this.query.source, date: returnDate});
         this.returnFilteredFlights = angular.copy(this.returnFlights);
       }
+      this.errorMessage = undefined;
     } else {
-      this.errorMessage = validated.resaon;
+      this.resetResult();
+      this.errorMessage = validated.reason;
     }
+  }
+
+  inputChanged() {
+    this.resetResult();
+  }
+
+  resetResult() {
+    this.filteredFlights = [];
+    this.returnFilteredFlights = [];
+    this.errorMessage = 'Run search again';    
+  }
+
+  exchangePorts() {
+    let swap = this.query.source;
+    this.query.source = this.query.destination;
+    this.query.destination = swap;
+
+    this.resetResult();    
   }
 
   getFormattedDate(unformattedDate) {
@@ -63,7 +83,8 @@ export class MainController {
     }
     if (this.currentTab == 2) {
       // return journey case
-      if (this.query.startDate >= this.query.returnDate) {
+      if (this.query.startDate > this.query.returnDate) {
+        console.log('here');
         validation.status = false;
         validation.reason = 'Start date cannot be chosen to be after returning date';
       }

@@ -15,6 +15,7 @@
             padding: 0.3rem 0.5rem;
             outline: none;
             border-radius: 0.2rem 0.2rem 0 0;
+            font-size: $fontHeadings;
             
             &.active {
                 border-bottom: 2px solid $blue;
@@ -32,12 +33,25 @@
     .formfields {
         border-top: 0;
         margin-top: 4rem;
+        font-size: 1.3rem;
         
         .form-field {
             padding-bottom: 20px;
+
+            label {
+                font-size: $fontHeadings;                
+            }
+        }
+
+        .fa-exchange {
+            transform: rotate(90deg);
+            margin-bottom: 1rem;
+            margin-top: -1rem;
+            float: right;
         }
         select {
             width: 100%;
+            font-size: 1.3rem;
             margin: 0.5rem auto 0 auto;
             &.ng-invalid {
                 border: 1px solid $errorRed;
@@ -47,6 +61,7 @@
         input {
             width: 98%;
             margin: 0.5rem auto 0 auto;
+            font-size: 1.3rem;
             padding: 0;
             padding-left: 0.5rem;
 
@@ -67,16 +82,18 @@
     .slider-container {
         .range-selector-container {
             margin-bottom: 0.5rem;
+            font-size: $fontHeadings;
         }
         .slider-instruction {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             width: 100%;
         }
         .slider-display {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             display: block;
             width: 100%;
             clear: both;
+            margin-top: 0.5rem;
         }
         .slider {
             padding-top: 2rem;
@@ -87,7 +104,7 @@
             span {
                 width: 5%;
                 line-height: 4.5rem;
-                font-size: 1.2rem;
+                font-size: 1.3rem;
 
                 &:nth-child(2) {
                     text-align: right;

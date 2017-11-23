@@ -27,6 +27,13 @@ a {
   margin-right: auto;
   margin-left: auto;
   font-size: 1.3rem;
+
+  .header {
+    background: $blue;
+    padding: 2rem 0;
+    color: $white;
+    margin-bottom: 1rem;
+  }
 }
 
 .colmn {
@@ -216,5 +223,9 @@ input[type=submit], button {
     background-image: -ms-linear-gradient(top, #819bcb, #536f9d);
     background-image: -o-linear-gradient(top, #819bcb, #536f9d);
     background-image: linear-gradient(to bottom, #819bcb, #536f9d);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#819bcb, endColorstr=#536f9d);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
