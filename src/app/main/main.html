@@ -1,6 +1,9 @@
 <div class="main-container">
   <div class="header">
-    <h1 class="app-heading">Search Flights <span class="fa fa-paper-plane-o"></span> </h1>
+    <h1 class="app-heading">
+      Search Flights <span class="fa fa-paper-plane-o"></span> 
+      <span class="user fa fa-user pull-right"></span>
+    </h1>
   </div>
   <div class="contains">
     <div class="form-content">
@@ -57,7 +60,10 @@
             </div>
           </div>
 
-          <input type="submit" value="Search" />
+          <!-- <input type="submit" value="Search" /> -->
+          <button type="submit" class="search-button">
+              <i class="fa fa-search"></i> Search
+          </button>
         </form>
       </div>
       <div class="slider-container">
@@ -65,9 +71,9 @@
         <span class="slider-instruction">Shift the slider to see the relavant result filtered on basis of cost</span>
         
         <div class="slider">
-          <span data-ng-bind="vm.minValue"> min value</span>
+          <span data-ng-bind="vm.minValue" class="minimum"> min value</span>
           <input id="slider2" type ="range" min ="0" max="20000" step ="50" ng-model="vm.query.rangeSelector" data-ng-change="vm.resetQueryResults()" data-ng-model-options="{debounce: 300}"></input>
-          <span data-ng-bind="vm.maxValue">max value</span>
+          <span data-ng-bind="vm.maxValue" class="maximum">max value</span>
         </div>
         
         <div class="slider-display">

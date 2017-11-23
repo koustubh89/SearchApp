@@ -77,6 +77,10 @@
                 float: right;
             }
         }
+
+        .search-button {
+            width: 100%;
+        }
     }
 
     .slider-container {
@@ -93,7 +97,7 @@
             display: block;
             width: 100%;
             clear: both;
-            margin-top: 0.5rem;
+            padding-top: 1.5rem;
         }
         .slider {
             padding-top: 2rem;
@@ -113,6 +117,9 @@
             input {
                 width: 75%;
                 margin: 0;
+            }
+            .maximum {
+                padding-left: 1rem;
             }
         }
     }
