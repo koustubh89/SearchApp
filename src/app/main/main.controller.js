@@ -19,10 +19,6 @@ export class MainController {
 
   getWebDevTec(webDevTec) {
     this.flights = webDevTec.getTec();
-
-    angular.forEach(this.flights, (flight) => {
-      console.log(flight);
-    });
   }
   
   fireSearchQuery(queryForm) {
@@ -84,7 +80,6 @@ export class MainController {
     if (this.currentTab == 2) {
       // return journey case
       if (this.query.startDate > this.query.returnDate) {
-        console.log('here');
         validation.status = false;
         validation.reason = 'Start date cannot be chosen to be after returning date';
       }
