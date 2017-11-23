@@ -60,11 +60,13 @@ export class MainController {
   }
 
   getFormattedDate(unformattedDate) {
-    let dd = unformattedDate.getDate();
-    let mm = unformattedDate.getMonth() + 1;
-    let yy = unformattedDate.getFullYear();
-    let date =  dd+'/'+mm+'/'+yy;
-    return date;
+    if (unformattedDate) {
+      let dd = unformattedDate.getDate();
+      let mm = unformattedDate.getMonth() + 1;
+      let yy = unformattedDate.getFullYear();
+      let date =  dd+'/'+mm+'/'+yy;
+      return date;
+    }
   }
 
   checkValidate() {
